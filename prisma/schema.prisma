@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id        String   @id @unique @default(uuid())
+  // 用户ID                不能重复  默认为UUID
+  username  String   @unique @map("user_name")
+  // 用户名           不能重复 @map表示为字段定义别名
+  password  String   @default("")
+  phone     Int?     @unique
+  // 手机号
+  email     String?  @unique @default("")
+  // 邮箱
+  nickName  String?  @default("一个不愿意透漏姓名的大佬") @map("nickName")
+  // 昵称
+  address   String?  @default("")
+  // 地址
+  gender    String?  @default("")
+  // 性别
+  autograph String?  @default("")
+  // 个性签名
+  createAt  DateTime @default(now()) @map("create_at")
+  // 创建时间
+  updateAt  DateTime @updatedAt @map("update_at")
+  // 更新时间
+  // 给数据表进行命名
+
+  @@map("users")
+}
+
+// 文件模型
+model exam {
+  id         String  @id @unique @default(uuid())
+  // 建立表的关联关系
+  email      String? @default("")
+  phone      Int?
+  score      Int?
+  examineeId String  @default("") @map("examinee_id")
+  // 作者ID 关联用户的ID
+
+  @@map("exams")
+}
