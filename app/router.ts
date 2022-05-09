@@ -6,7 +6,9 @@ export default (app: Application) => {
   router.get('/', controller.home.index);
   router.get('/test', controller.home.index);
   router.post('/register', controller.home.register);
-  router.post('/invite', controller.home.invite);
+  router.post('/invite', controller.examController.invite);
+  router.get('/exams', controller.examController.exams);
+  router.get('/submit', controller.examController.submit);
   router.get('/users', controller.home.users);
   router.get('/news', controller.news.list);
 };

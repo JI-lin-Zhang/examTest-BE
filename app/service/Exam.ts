@@ -2,23 +2,43 @@ import { Service } from 'egg';
 import { basePort } from '../../constants/common';
 //import { baseURL } from '../../constants/common';
 import { ip } from '../../utils/ip';
-import { createExam, submitQuestionnaire } from '../controller/examController';
 
 /**
  * Test Service
  */
 export default class Exam extends Service {
-
+  public async createExam(examineeId: string){
+    const prisma = require("../../utils/db");
+    // const user = await prisma.user.findFirst(); // 查找第一个用户
+    return prisma.exam.create({
+    // 调用创建文章内容的方法  
+      data: {
+        examineeId,
+        //examineeId: user.id,
+        //填写进去相应的数据
+      }
+    });
+  }
   /* Generate an invite link */
   public async generateInviteLink(examineeId: string) {
-    const res = await createExam(examineeId);
+    const res = await this.createExam(examineeId);
     const { id } = res;
     return `http://${ip}:${basePort}/test?inviteId=${id}`;
   }
 
+  public async submitQuestionnaire(examineeId: string, score: number){
+    const prisma = require("../../utils/db");
+    // const user = await prisma.user.findFirst(); // 查找第一个用户
+    return prisma.exam.update({
+      where: { examineeId},
+      data: {
+        score,
+      }
+    });
+  }
   /* Get updated score */
   public async submit(examineeId: string, score: number) {
-    const res = await submitQuestionnaire(examineeId, score);
+    const res = await this.submitQuestionnaire(examineeId, score);
     const { score: examScore } = res;
     return `${examScore}`;
   }
@@ -77,5 +97,16 @@ export default class Exam extends Service {
       },
     });
     return exam;
+  }
+
+  // 返回所有测试
+  public async getAllExams() {
+    const prisma = require("../../utils/db");
+    try {
+      return await prisma.exam.findMany();
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   }
 }
