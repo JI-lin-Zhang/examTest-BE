@@ -52,9 +52,14 @@ export default (appInfo: EggAppInfo) => {
 
   config.security = {
     csrf: {
-      enabled: true,
+      enabled: false,
       headerName: 'token',
     }
+  }
+
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
   }
 
   config.cluster = {
