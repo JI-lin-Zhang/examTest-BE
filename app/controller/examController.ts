@@ -1,6 +1,13 @@
 import { Controller } from 'egg';
 
+/**
+ * @Controller exam
+ */
 export default class ExamsController extends Controller {
+  /**
+   * @Router POST /invite
+   * @Request body exam *examineeId eg:{"examineeId":"7b6b0aec-b020-4073-973b-555134435a21"} 邀请候选人参加测试
+   */
   async invite() {
     const { ctx } = this;
     const { examineeId } = ctx.request.body;
@@ -19,6 +26,9 @@ export default class ExamsController extends Controller {
       data: scoreMsg,
     }
   }
+  /**
+   * @Router GET /exams
+   */
   async exams() {
     const { ctx } = this;
     const getExamsRes: any = await ctx.service.exam.getAllExams();
