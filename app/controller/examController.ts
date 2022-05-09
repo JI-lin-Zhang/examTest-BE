@@ -10,10 +10,10 @@ export default class ExamsController extends Controller {
       data: inviteMsg,
     }
   }
-  async submit() {
+  async submitExam() {
     const { ctx } = this;
-    const { examineeId, score } = ctx.request.body;
-    const newScore = await ctx.service.exam.submit(examineeId, score);
+    const { id, score } = ctx.request.body;
+    const newScore = await ctx.service.exam.submit(id, score);
     const scoreMsg = `分数是 ${newScore}`;
     ctx.body = {
       data: scoreMsg,

@@ -8,7 +8,7 @@ export default (app: Application) => {
   router.post('/register', controller.home.register);
   router.post('/invite', controller.examController.invite);
   router.get('/exams', controller.examController.exams);
-  router.get('/submit', controller.examController.submit);
+  router.post('/submitExam', controller.examController.submitExam);
   router.get('/users', controller.home.users);
   router.get('/news', controller.news.list);
 };

@@ -26,11 +26,11 @@ export default class Exam extends Service {
     return `http://${ip}:${basePort}/test?inviteId=${id}`;
   }
 
-  public async submitQuestionnaire(examineeId: string, score: number){
+  public async submitQuestionnaire(id: string, score: number){
     const prisma = require("../../utils/db");
     // const user = await prisma.user.findFirst(); // 查找第一个用户
     return prisma.exam.update({
-      where: { examineeId},
+      where: { id },
       data: {
         score,
       }
