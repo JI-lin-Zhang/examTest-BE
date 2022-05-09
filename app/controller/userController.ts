@@ -25,3 +25,14 @@ export async function createUser(userInfo: CreateUserFace) {
     return err;
   }
 }
+
+// 返回所有用户
+export async function getAllUsers() {
+  const prisma = require("../../utils/db");
+  try {
+    return await prisma.user.findMany();
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}

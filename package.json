@@ -25,6 +25,8 @@
     "@prisma/client": "^3.13.0",
     "egg": "^2.6.1",
     "egg-scripts": "^2.6.0",
+    "egg-swagger-doc": "^2.3.2",
+    "egg-validate": "^2.0.2",
     "egg-view-ejs": "^2.0.1",
     "egg-view-nunjucks": "^2.3.0",
     "typescript": "^4.6.4"

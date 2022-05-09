@@ -1,7 +1,16 @@
 import { Controller } from 'egg';
-import { createUser } from './userController';
+import { createUser, getAllUsers } from './userController';
 
+
+/**
+ * @Controller home
+ */
 export default class HomeController extends Controller {
+  /**
+   * #swagger-api
+   *
+   * @function index
+   */
   public async index() {
     const { ctx } = this;
     await ctx.render('index.html', {
@@ -47,5 +56,18 @@ export default class HomeController extends Controller {
     ctx.body = {
       data: scoreMsg,
     }
+  }
+  async users() {
+    const { ctx } = this;
+    const getUsersRes: any = await getAllUsers();
+    if (getUsersRes.err) {
+      ctx.body = {
+        err: `查找失败。`,
+      };
+      return;
+    }
+    ctx.body = {
+      data: getUsersRes,
+    };
   }
 }
