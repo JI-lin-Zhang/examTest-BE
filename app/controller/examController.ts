@@ -28,6 +28,13 @@ export default class ExamsController extends Controller {
   async submitExam() {
     const { ctx } = this;
     const { id, score } = ctx.request.body;
+    const examData = await ctx.service.exam.findExamById(id);
+    if (examData && examData.score) {
+      ctx.body = {
+        err: '已经提交过了',
+      }
+      return;
+    }
     const newScore = await ctx.service.exam.submit(id, score);
     const scoreMsg = `分数是 ${newScore}`;
     ctx.body = {
