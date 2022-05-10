@@ -1,4 +1,4 @@
-import { Service } from 'egg';
+import { Service } from 'egg'
 
 /**
  * Test Service
@@ -10,10 +10,10 @@ export default class Test extends Service {
    * @param name - your name
    */
   public async sayHi(name: string) {
-    return `hi, ${name}`;
+    return `hi, ${name}`
   }
 
   public async home() {
-    return `<h1>home</h1>`;
+    return '<h1>home</h1>'
   }
 }

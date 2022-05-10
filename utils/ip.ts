@@ -1,4 +1,4 @@
-import { networkInterfaces } from "os";
+import { networkInterfaces } from 'os'
 
 const nets = networkInterfaces()
 const results = Object.create(null) // Or just '{}', an empty object
@@ -15,4 +15,4 @@ for (const name of Object.keys(nets)) {
   }
 }
 
-export const ip = results["WLAN"][0]
+export const ip = results.WLAN[0]

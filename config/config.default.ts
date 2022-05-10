@@ -1,22 +1,22 @@
-import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
+import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg'
 
 export default (appInfo: EggAppInfo) => {
-  const config = {} as PowerPartial<EggAppConfig>;
+  const config = {} as PowerPartial<EggAppConfig>
 
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1650852940478_4449';
+  config.keys = appInfo.name + '_1650852940478_4449'
 
   // add your egg config in here
-  config.middleware = [];
+  config.middleware = []
 
   config.view = {
     defaultViewEngine: 'nunjucks',
     mapping: {
       '.tpl': 'nunjucks',
       '.html': 'ejs',
-    }
-  };
+    },
+  }
 
   config.swaggerdoc = {
     dirScanner: './app/controller',
@@ -25,9 +25,9 @@ export default (appInfo: EggAppInfo) => {
       description: 'swagger-ui for egg',
       version: '1.0.0',
     },
-    schemes: ['http', 'https'],
-    consumes: ['application/json'],
-    produces: ['application/json'],
+    schemes: [ 'http', 'https' ],
+    consumes: [ 'application/json' ],
+    produces: [ 'application/json' ],
     securityDefinitions: {
       // apikey: {
       //   type: 'apiKey',
@@ -48,18 +48,18 @@ export default (appInfo: EggAppInfo) => {
     // enableValidate: true,
     routerMap: false,
     enable: true,
-  };
+  }
 
   config.security = {
     csrf: {
       enabled: false,
       headerName: 'token',
-    }
+    },
   }
 
   config.cors = {
     origin: '*',
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   }
 
   config.cluster = {
@@ -67,17 +67,17 @@ export default (appInfo: EggAppInfo) => {
       path: '',
       port: 7001,
       hostname: '::',
-    }
+    },
   }
 
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
-  };
+  }
 
   // the return config will combines to EggAppConfig
   return {
     ...config,
     ...bizConfig,
-  };
-};
+  }
+}

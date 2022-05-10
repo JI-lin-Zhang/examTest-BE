@@ -1,10 +1,10 @@
-import { EggPlugin } from 'egg';
+import { EggPlugin } from 'egg'
 
 const plugin: EggPlugin = {
   static: true,
   cors: {
     enable: true,
-    package: 'egg-cors'
+    package: 'egg-cors',
   },
   nunjucks: {
     enable: true,
@@ -12,7 +12,7 @@ const plugin: EggPlugin = {
   },
   swaggerdoc: {
     enable: true,
-    package: 'egg-swagger-doc'
+    package: 'egg-swagger-doc',
   },
   /* swaggerEgg: {
     enable: true,
@@ -20,12 +20,12 @@ const plugin: EggPlugin = {
   }, */
   validate: {
     enable: true,
-    package: 'egg-validate'
+    package: 'egg-validate',
   },
   ejs: {
     enable: true,
     package: 'egg-view-ejs',
-  }
-};
+  },
+}
 
-export default plugin;
+export default plugin

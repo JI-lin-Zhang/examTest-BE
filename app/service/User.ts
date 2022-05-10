@@ -1,4 +1,5 @@
-import { Service } from 'egg';
+import { Service } from 'egg'
+import prisma from '../../utils/db'
 export interface CreateUserFace {
   username: string
   email: string;
@@ -15,13 +16,12 @@ export default class User extends Service {
    * @param phone - a user's phone number
    */
   public async findUserByPhone(phone: string) {
-    const prisma = require("../../utils/db");
     const user = await prisma.user.findUnique({
       where: {
         phone: parseInt(phone, 10),
       },
-    });
-    return user;
+    })
+    return user
   }
 
   /**
@@ -29,13 +29,12 @@ export default class User extends Service {
    * @param email - a user's email
    */
   public async findUserByEmail(email: string) {
-    const prisma = require("../../utils/db");
     const user = await prisma.user.findUnique({
       where: {
         email,
       },
-    });
-    return user;
+    })
+    return user
   }
 
   /**
@@ -43,44 +42,41 @@ export default class User extends Service {
    * @param id - a user's id
    */
   public async findUserById(id: string) {
-    const prisma = require("../../utils/db");
     const user = await prisma.user.findUnique({
       where: {
         id,
       },
-    });
-    return user;
+    })
+    return user
   }
 
   public async createUser(userInfo: CreateUserFace) {
-    const { username, email, phone } = userInfo;
-    const prisma = require("../../utils/db");
+    const { username, email, phone } = userInfo
     // 创建用户
     try {
       await prisma.user.create({
         // 调用prisma的创建功能
         data: {
-          username: username,
+          username,
           email,
           phone: parseInt(phone, 10),
           password: 'test',
         },
-      });
+      })
     } catch (err) {
       // 异常捕获
-      console.log(err);
-      return err;
+      console.log(err)
+      return err
     }
   }
 
   // 返回所有用户
   async getAllUsers() {
-    const prisma = require("../../utils/db");
     try {
-      return await prisma.user.findMany();
+      return await prisma.user.findMany()
     } catch (err) {
-      console.log(err);
-      return err;
+      console.log(err)
+      return err
     }
   }
 }
