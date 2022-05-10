@@ -17,6 +17,14 @@ export default class ExamsController extends Controller {
       data: inviteMsg,
     }
   }
+  async exam() {
+    const { ctx } = this;
+    const { id } = ctx.request.body;
+    const data = await ctx.service.exam.findExamById(id)
+    ctx.body =  {
+      data
+    };
+  }
   async submitExam() {
     const { ctx } = this;
     const { id, score } = ctx.request.body;
