@@ -39,13 +39,15 @@ model user {
 
 // 文件模型
 model exam {
-  id         String  @id @unique @default(uuid())
+  id         String   @id @unique @default(uuid())
   // 建立表的关联关系
-  email      String? @default("")
+  email      String?  @default("")
   phone      Int?
   score      Int?
-  examineeId String  @default("") @map("examinee_id")
+  examineeId String   @default("") @map("examinee_id")
   // 作者ID 关联用户的ID
+  createAt   DateTime @default(now()) @map("create_at")
+  // 创建时间
 
   @@map("exams")
 }
