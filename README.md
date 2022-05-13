@@ -3,6 +3,10 @@
 using typescript && egg
 
 ## QuickStart
+```bash
+$ echo "export const vpsIP = '<Your host IP>'" > local-config.ts
+```
+You need a `local-config.ts` file in the root directory.
 
 ### Development
 
