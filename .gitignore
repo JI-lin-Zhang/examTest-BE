@@ -20,3 +20,4 @@ test/**/*.map
 config/**/*.map
 !app/public/**/*.js
 !app/public/**/*.js.map
+local-config.ts
