@@ -11,10 +11,11 @@ export default class ExamsController extends Controller {
   async invite() {
     const { ctx } = this
     const { examineeId } = ctx.request.body
-    const inviteLink = await ctx.service.exam.generateInviteLink(examineeId)
-    const inviteMsg = `邀请链接是 ${inviteLink}`
-    ctx.body = {
-      data: inviteMsg,
+    const createExamRes = await ctx.service.exam.createExam(examineeId)
+    if (createExamRes) {
+      ctx.body = {
+        data: createExamRes.id,
+      }
     }
   }
   /**
