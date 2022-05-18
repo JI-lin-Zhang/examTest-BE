@@ -54,7 +54,7 @@ export default class User extends Service {
     const { username, email, phone } = userInfo
     // 创建用户
     try {
-      await prisma.user.create({
+      return await prisma.user.create({
         // 调用prisma的创建功能
         data: {
           username,
