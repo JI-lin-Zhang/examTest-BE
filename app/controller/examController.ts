@@ -17,6 +17,10 @@ export default class ExamsController extends Controller {
       data: inviteMsg,
     }
   }
+  /**
+   * @Router POST /exam
+   * @Request body string *id eg:{"id":"05db79b7-5d4c-453c-b635-e353db0f3f1f"} 查找 exam
+   */
   async exam() {
     const { ctx } = this
     const { id } = ctx.request.body

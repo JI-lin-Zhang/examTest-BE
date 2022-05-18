@@ -43,4 +43,18 @@ export default class UserController extends Controller {
       data: getUsersRes,
     }
   }
+
+  /**
+   * @Router POST /user
+   * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 查找 user
+   */
+
+  async user() {
+    const { ctx } = this
+    const { id } = ctx.request.body
+    const data = await ctx.service.user.findUserById(id)
+    ctx.body = {
+      data,
+    }
+  }
 }

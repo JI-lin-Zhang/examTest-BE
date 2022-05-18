@@ -5,11 +5,12 @@ export default (app: Application) => {
 
   router.get('/', controller.home.index)
   router.get('/test', controller.home.index)
-  router.post('/register', controller.userController.register)
   router.post('/invite', controller.examController.invite)
   router.post('/exam', controller.examController.exam)
   router.get('/exams', controller.examController.exams)
   router.post('/submitExam', controller.examController.submitExam)
+  router.post('/register', controller.userController.register)
+  router.post('/user', controller.userController.user)
   router.get('/users', controller.userController.users)
   router.get('/news', controller.news.list)
 }
