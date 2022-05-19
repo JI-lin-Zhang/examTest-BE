@@ -66,7 +66,7 @@ export default (appInfo: EggAppInfo) => {
     listen: {
       path: '',
       port: 7001,
-      hostname: '::',
+      hostname: '0.0.0.0',
     },
   }
 
