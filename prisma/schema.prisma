@@ -11,26 +11,23 @@ datasource db {
 }
 
 model user {
-  id        String   @id @unique @default(uuid())
+  id       String   @id @unique @default(uuid())
   // 用户ID                不能重复  默认为UUID
-  username  String   @unique @map("user_name")
+  username String   @unique @map("user_name")
   // 用户名           不能重复 @map表示为字段定义别名
-  password  String   @default("")
-  phone     Int?     @unique
+  phone    Int?     @unique
   // 手机号
-  email     String?  @unique @default("")
+  email    String?  @unique @default("")
   // 邮箱
-  nickName  String?  @default("一个不愿意透漏姓名的大佬") @map("nickName")
-  // 昵称
-  address   String?  @default("")
+  address  String?  @default("")
   // 地址
-  gender    String?  @default("")
+  gender   String?  @default("")
   // 性别
-  autograph String?  @default("")
-  // 个性签名
-  createAt  DateTime @default(now()) @map("create_at")
+  score    Int?
+  // 分数
+  createAt DateTime @default(now()) @map("create_at")
   // 创建时间
-  updateAt  DateTime @updatedAt @map("update_at")
+  updateAt DateTime @updatedAt @map("update_at")
   // 更新时间
   // 给数据表进行命名
 
@@ -50,4 +47,21 @@ model exam {
   // 创建时间
 
   @@map("exams")
+}
+
+model question {
+  id       String   @id @unique @default(uuid())
+  title    String   @default("")
+  options  Option[]
+  answer   String
+  createAt DateTime @default(now()) @map("create_at")
+
+  @@map("questions")
+}
+
+model Option {
+  id         String    @id @unique @default(uuid())
+  text       String
+  question   question? @relation(fields: [questionId], references: [id])
+  questionId String?
 }

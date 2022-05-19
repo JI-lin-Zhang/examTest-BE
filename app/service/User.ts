@@ -60,7 +60,6 @@ export default class User extends Service {
           username,
           email,
           phone: parseInt(phone, 10),
-          password: 'test',
         },
       })
     } catch (err) {
@@ -78,5 +77,22 @@ export default class User extends Service {
       console.log(err)
       return err
     }
+  }
+
+  public async submitQuestionnaire(id: string, score: number) {
+    // const user = await prisma.user.findFirst(); // 查找第一个用户
+    return prisma.user.update({
+      where: { id },
+      data: {
+        score,
+      },
+    })
+  }
+
+  /* Get updated score */
+  public async submit(examineeId: string, score: number) {
+    const res = await this.submitQuestionnaire(examineeId, score)
+    const { score: examScore } = res
+    return `${examScore}`
   }
 }

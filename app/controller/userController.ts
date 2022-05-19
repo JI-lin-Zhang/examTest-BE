@@ -57,4 +57,21 @@ export default class UserController extends Controller {
       data,
     }
   }
+
+  async updateUserScore() {
+    const { ctx } = this
+    const { id, score } = ctx.request.body
+    const userData = await ctx.service.user.findUserById(id)
+    if (userData && userData.score) {
+      ctx.body = {
+        err: '已经提交过了',
+      }
+      return
+    }
+    const newScore = await ctx.service.user.submit(id, score)
+    const scoreMsg = `分数是 ${newScore}`
+    ctx.body = {
+      data: scoreMsg,
+    }
+  }
 }
