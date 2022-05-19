@@ -40,6 +40,7 @@ export default class ExamsController extends Controller {
       }
       return
     }
+    await ctx.service.user.submit(examData!.examineeId, score)
     const newScore = await ctx.service.exam.submit(id, score)
     const scoreMsg = `分数是 ${newScore}`
     ctx.body = {

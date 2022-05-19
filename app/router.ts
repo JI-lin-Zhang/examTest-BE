@@ -11,6 +11,7 @@ export default (app: Application) => {
   router.post('/submitExam', controller.examController.submitExam)
   router.post('/register', controller.userController.register)
   router.post('/user', controller.userController.user)
+  router.post('/updateUserScore', controller.userController.updateUserScore)
   router.get('/users', controller.userController.users)
   router.get('/news', controller.news.list)
 }
