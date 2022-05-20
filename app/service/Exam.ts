@@ -94,6 +94,19 @@ export default class Exam extends Service {
     return exam
   }
 
+  /**
+   * delete exam by id
+   * @param id - an exam's id
+   */
+  public async deleteExamById(id: string) {
+    const exam = await prisma.exam.delete({
+      where: {
+        id,
+      },
+    })
+    return exam
+  }
+
   // 返回所有测试
   public async getAllExams() {
     try {

@@ -50,6 +50,15 @@ export default class User extends Service {
     return user
   }
 
+  public async deleteUserById(id: string) {
+    const user = await prisma.user.delete({
+      where: {
+        id,
+      },
+    })
+    return user
+  }
+
   public async createUser(userInfo: CreateUserFace) {
     const { username, email, phone } = userInfo
     // 创建用户
