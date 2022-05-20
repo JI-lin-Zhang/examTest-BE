@@ -58,6 +58,19 @@ export default class UserController extends Controller {
     }
   }
 
+  /**
+   * @Router POST /deleteUser
+   * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 删除 user
+   */
+  async deleteUser() {
+    const { ctx } = this
+    const { id } = ctx.request.body
+    const data = await ctx.service.user.deleteUserById(id)
+    ctx.body = {
+      data,
+    }
+  }
+
   async updateUserScore() {
     const { ctx } = this
     const { id, score } = ctx.request.body

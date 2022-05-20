@@ -30,6 +30,18 @@ export default class ExamsController extends Controller {
       data,
     }
   }
+  /**
+   * @Router POST /deleteExam
+   * @Request body string *id eg:{"id":"05db79b7-5d4c-453c-b635-e353db0f3f1f"} 删除 exam
+   */
+  async deleteExam() {
+    const { ctx } = this
+    const { id } = ctx.request.body
+    const data = await ctx.service.exam.deleteExamById(id)
+    ctx.body = {
+      data,
+    }
+  }
   async submitExam() {
     const { ctx } = this
     const { id, score } = ctx.request.body
