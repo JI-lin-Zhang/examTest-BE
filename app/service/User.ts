@@ -51,12 +51,17 @@ export default class User extends Service {
   }
 
   public async deleteUserById(id: string) {
-    const user = await prisma.user.delete({
-      where: {
-        id,
-      },
-    })
-    return user
+    try {
+      const user = await prisma.user.delete({
+        where: {
+          id,
+        },
+      })
+      return user
+    } catch (err) {
+      console.error(err)
+      return '删除失败'
+    }
   }
 
   public async createUser(userInfo: CreateUserFace) {

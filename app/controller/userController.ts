@@ -65,6 +65,13 @@ export default class UserController extends Controller {
   async deleteUser() {
     const { ctx } = this
     const { id } = ctx.request.body
+    if (Array.isArray(id)) {
+      id.forEach(async (i: string) => await ctx.service.user.deleteUserById(i))
+      ctx.body = {
+        data: '批量删除成功',
+      }
+      return
+    }
     const data = await ctx.service.user.deleteUserById(id)
     ctx.body = {
       data,
