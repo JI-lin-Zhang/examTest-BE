@@ -94,4 +94,14 @@ export default class UserController extends Controller {
       data: scoreMsg,
     }
   }
+
+  // 查询当天参加考试题的人数
+  async getTodayUser() {
+    const { ctx } = this;
+    const todayTotal = await ctx.service.user.getTodayUser()
+    ctx.body = {
+      todayTotal
+    }
+
+  }
 }

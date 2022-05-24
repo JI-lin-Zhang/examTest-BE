@@ -109,4 +109,22 @@ export default class User extends Service {
     const { score: examScore } = res
     return `${examScore}`
   }
+
+
+  // 查询当天参加考试题的人数
+  public async getTodayUser() {
+    // 获取当天的时间
+    const date = new Date();
+    // 获取当天时间的 00:00:00:00
+    date.setHours(8, 0, 0, 0);
+
+    const todayTotal = await prisma.user.count({
+      where: {
+        updateAt: {
+          gte: date
+        }
+      }
+    })
+    return todayTotal
+  }
 }
