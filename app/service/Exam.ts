@@ -35,12 +35,6 @@ export default class Exam extends Service {
       },
     })
   }
-  /* Get updated score */
-  public async submit(examineeId: string, score: number) {
-    const res = await this.submitQuestionnaire(examineeId, score)
-    const { score: examScore } = res
-    return `${examScore}`
-  }
 
   /**
    * find exam by phone
@@ -110,10 +104,15 @@ export default class Exam extends Service {
   // 返回所有测试
   public async getAllExams() {
     try {
-      return await prisma.exam.findMany()
+      return prisma.exam.findMany()
     } catch (err) {
       console.log(err)
       return err
     }
+  }
+
+  // 提交 exam
+  public async submit() {
+    console.log('submit')
   }
 }

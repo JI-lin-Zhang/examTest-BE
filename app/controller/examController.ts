@@ -53,8 +53,8 @@ export default class ExamsController extends Controller {
       return
     }
     await ctx.service.user.submit(examData!.examineeId, score)
-    const newScore = await ctx.service.exam.submit(id, score)
-    const scoreMsg = `分数是 ${newScore}`
+    const { score: examScore } = await ctx.service.exam.submitQuestionnaire(id, score)
+    const scoreMsg = `分数是 ${examScore}`
     ctx.body = {
       data: scoreMsg,
     }
@@ -73,6 +73,13 @@ export default class ExamsController extends Controller {
     }
     ctx.body = {
       data: getExamsRes,
+    }
+  }
+
+  async submit() {
+    const { ctx } = this
+    ctx.body = {
+      data: '',
     }
   }
 }

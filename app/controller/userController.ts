@@ -100,8 +100,15 @@ export default class UserController extends Controller {
     const { ctx } = this
     const todayTotal = await ctx.service.user.getTodayUser()
     ctx.body = {
-      todayTotal,
+      data: todayTotal,
     }
+  }
 
+  async getLastSevenDay() {
+    const { ctx } = this
+    const lastSevenDay = await ctx.service.user.lastSevenDay()
+    ctx.body = {
+      data: lastSevenDay,
+    }
   }
 }

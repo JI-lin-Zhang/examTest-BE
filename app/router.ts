@@ -10,6 +10,7 @@ export default (app: Application) => {
   router.post('/deleteExam', controller.examController.deleteExam)
   router.get('/exams', controller.examController.exams)
   router.post('/submitExam', controller.examController.submitExam)
+  router.post('/exam/submit', controller.examController.submit)
   router.post('/register', controller.userController.register)
   router.post('/user', controller.userController.user)
   router.post('/updateUserScore', controller.userController.updateUserScore)
@@ -22,4 +23,6 @@ export default (app: Application) => {
   router.get('/news', controller.news.list)
   // 查询当天参加考试题的人数
   router.get('/userToday', controller.userController.getTodayUser)
+  // 查询最近7天的参加考试的人数
+  router.get('/userSeven', controller.userController.getLastSevenDay)
 }

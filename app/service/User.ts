@@ -127,4 +127,38 @@ export default class User extends Service {
     })
     return todayTotal
   }
+
+  // 查询最近7天的参加考试的人数
+  public async lastSevenDay() {
+    // 查询出最近7天的用户数据,按day分组汇总
+    const dateArr: any[] = await prisma.$queryRawUnsafe(`
+     select day,count(1) as num from (
+         select date(update_at/1000, 'unixepoch', '+8 hours') as day from users
+        where day>date('now','+8 hours','-7 days')
+      ) a group by day
+    `)
+
+    // 创建空对象
+    const newObj = {}
+
+    dateArr.forEach(item => {
+      // 设置newObj的键值对
+      newObj[item.day] = item.num
+    })
+
+    const newArr: any[] = []
+    for (let i = 0; i < 7; i++) {
+      const date = new Date()
+      date.setDate(date.getDate() - 7 + i)
+      date.setHours(8)
+      const day = date.toJSON().slice(0, 10)
+      const obj = {
+        day,
+        // 如果没有数据,就用0填充, 空值合并操作符
+        num: newObj[day] ?? 0,
+      }
+      newArr.push(obj)
+    }
+    return newArr
+  }
 }
