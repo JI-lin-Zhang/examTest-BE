@@ -15,6 +15,9 @@ export default (app: Application) => {
   router.post('/updateUserScore', controller.userController.updateUserScore)
   router.post('/deleteUser', controller.userController.deleteUser)
   router.get('/users', controller.userController.users)
+  router.get('/questions', controller.questionController.questions)
+  router.post('/addQuestion', controller.questionController.add)
+  router.post('/addOption', controller.optionController.add)
   router.get('/news', controller.news.list)
   // 查询当天参加考试题的人数
   router.get('/userToday', controller.userController.getTodayUser)

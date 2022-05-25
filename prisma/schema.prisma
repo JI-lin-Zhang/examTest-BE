@@ -53,8 +53,10 @@ model question {
   id       String   @id @unique @default(uuid())
   title    String   @default("")
   options  Option[]
-  answer   String
+  answer   Int
+  tag      String   @default("frontend")
   createAt DateTime @default(now()) @map("create_at")
+  updateAt DateTime @updatedAt @map("update_at")
 
   @@map("questions")
 }
@@ -64,4 +66,8 @@ model Option {
   text       String
   question   question? @relation(fields: [questionId], references: [id])
   questionId String?
+  createAt   DateTime  @default(now()) @map("create_at")
+  updateAt   DateTime  @updatedAt @map("update_at")
+
+  @@map("options")
 }
