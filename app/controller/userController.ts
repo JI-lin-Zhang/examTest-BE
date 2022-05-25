@@ -4,7 +4,7 @@ import { Controller } from 'egg'
  * @Controller user
  */
 export default class UserController extends Controller {
-  async register() {
+  async add() {
     const { ctx } = this
     const { username, email, phone } = ctx.request.body
     if (username) {
@@ -45,11 +45,11 @@ export default class UserController extends Controller {
   }
 
   /**
-   * @Router POST /user
+   * @Router POST /user/find
    * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 查找 user
    */
 
-  async user() {
+  async find() {
     const { ctx } = this
     const { id } = ctx.request.body
     const data = await ctx.service.user.findUserById(id)
@@ -59,10 +59,10 @@ export default class UserController extends Controller {
   }
 
   /**
-   * @Router POST /deleteUser
+   * @Router DELETE /user
    * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 删除 user
    */
-  async deleteUser() {
+  async delete() {
     const { ctx } = this
     const { id } = ctx.request.body
     if (Array.isArray(id)) {
@@ -78,7 +78,7 @@ export default class UserController extends Controller {
     }
   }
 
-  async updateUserScore() {
+  async updateScore() {
     const { ctx } = this
     const { id, score } = ctx.request.body
     const userData = await ctx.service.user.findUserById(id)

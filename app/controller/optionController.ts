@@ -59,7 +59,7 @@ export default class OptionController extends Controller {
   }
 
   /**
-   * @Router POST /delete
+   * @Router DELETE /option
    * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 删除 option
    */
   async delete() {

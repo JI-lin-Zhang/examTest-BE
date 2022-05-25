@@ -5,10 +5,10 @@ import { Controller } from 'egg'
  */
 export default class ExamsController extends Controller {
   /**
-   * @Router POST /invite
+   * @Router POST /exam
    * @Request body exam *examineeId eg:{"examineeId":"7b6b0aec-b020-4073-973b-555134435a21"} 邀请候选人参加测试
    */
-  async invite() {
+  async add() {
     const { ctx } = this
     const { examineeId } = ctx.request.body
     const createExamRes = await ctx.service.exam.createExam(examineeId)
@@ -19,10 +19,10 @@ export default class ExamsController extends Controller {
     }
   }
   /**
-   * @Router POST /exam
+   * @Router POST /exam/find
    * @Request body string *id eg:{"id":"05db79b7-5d4c-453c-b635-e353db0f3f1f"} 查找 exam
    */
-  async exam() {
+  async find() {
     const { ctx } = this
     const { id } = ctx.request.body
     const data = await ctx.service.exam.findExamById(id)
@@ -31,10 +31,10 @@ export default class ExamsController extends Controller {
     }
   }
   /**
-   * @Router POST /deleteExam
+   * @Router DELETE /exam
    * @Request body string *id eg:{"id":"05db79b7-5d4c-453c-b635-e353db0f3f1f"} 删除 exam
    */
-  async deleteExam() {
+  async delete() {
     const { ctx } = this
     const { id } = ctx.request.body
     const data = await ctx.service.exam.deleteExamById(id)

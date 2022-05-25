@@ -4,6 +4,10 @@ import { Controller } from 'egg'
  * @Controller question
  */
 export default class QuestionController extends Controller {
+  /**
+   * @Router POST /question
+   * @Request body string *title eg:{"title":"在 css 选择器当中，优先级排序正确的是","answer":3} add question
+   */
   async add() {
     const { ctx } = this
     const { title, answer } = ctx.request.body
@@ -78,10 +82,10 @@ export default class QuestionController extends Controller {
   }
 
   /**
-   * @Router POST /deleteQuestion
+   * @Router DELETE /question
    * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 删除 question
    */
-  async deleteQuestion() {
+  async delete() {
     const { ctx } = this
     const { id } = ctx.request.body
     if (Array.isArray(id)) {
