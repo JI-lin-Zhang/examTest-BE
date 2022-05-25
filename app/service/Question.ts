@@ -75,11 +75,13 @@ export default class Question extends Service {
   // 根据标签返回问题
   async getQuestionsByTag(tag: string) {
     try {
-      return await prisma.question.findMany({
+      return prisma.question.findMany({
         where: {
           tag,
         },
-        include: {
+        select: {
+          id: true,
+          title: true,
           options: true,
         },
       })
