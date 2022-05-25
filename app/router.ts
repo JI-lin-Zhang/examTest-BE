@@ -16,6 +16,7 @@ export default (app: Application) => {
   router.post('/deleteUser', controller.userController.deleteUser)
   router.get('/users', controller.userController.users)
   router.get('/questions', controller.questionController.questions)
+  router.post('/question/find', controller.questionController.find)
   router.post('/addQuestion', controller.questionController.add)
   router.post('/addOption', controller.optionController.add)
   router.get('/news', controller.news.list)

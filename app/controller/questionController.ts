@@ -45,10 +45,10 @@ export default class QuestionController extends Controller {
   }
 
   /**
-   * @Router POST /findQuestions
+   * @Router POST /question/find
    * @Request body string *tag eg:{"tag":"frontend"} 查找 question
    */
-  async findQuestions() {
+  async find() {
     const { ctx } = this
     const { tag } = ctx.request.body
     const res: any = await ctx.service.question.getQuestionsByTag(tag)
