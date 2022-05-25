@@ -12,7 +12,7 @@ export default (app: Application) => {
   router.post('/submitExam', controller.examController.submitExam) // 前端校验答卷
   router.post('/exam/submit', controller.examController.submit) // 后端校验答卷
   router.post('/user', controller.userController.add) // 之前的 register
-  router.post('/user/find', controller.userController.find)
+  router.get('/user', controller.userController.find)
   router.post('/user/updateScore', controller.userController.updateScore)
   router.delete('/user', controller.userController.delete)
   router.get('/users', controller.userController.users)

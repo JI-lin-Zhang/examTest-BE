@@ -3,7 +3,7 @@ import prisma from '../../utils/db'
 export interface CreateUserFace {
   username: string
   email: string;
-  phone: string;
+  phone: number;
 }
 
 /**
@@ -50,6 +50,14 @@ export default class User extends Service {
     return user
   }
 
+  public async findUser(query: Partial<CreateUserFace>) {
+    return prisma.user.findMany({
+      where: {
+        ...query,
+      },
+    })
+  }
+
   public async deleteUserById(id: string) {
     try {
       const user = await prisma.user.delete({
@@ -73,7 +81,7 @@ export default class User extends Service {
         data: {
           username,
           email,
-          phone: parseInt(phone, 10),
+          phone,
         },
       })
     } catch (err) {
