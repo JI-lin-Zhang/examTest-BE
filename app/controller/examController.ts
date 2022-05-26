@@ -76,10 +76,21 @@ export default class ExamsController extends Controller {
     }
   }
 
+  /**
+   * @Router POST /exam/submit
+   * @Request body examSubmition *data 考生答卷
+   */
   async submit() {
     const { ctx } = this
+    const { examineeId, tag, answers } = ctx.request.body
+    const data = await ctx.service.exam.submit(tag, answers, examineeId)
+    if (data.err) {
+      ctx.body = { err: data.err }
+      return
+    }
+    await ctx.service.user.submitQuestionnaire(examineeId, data.score ?? 0)
     ctx.body = {
-      data: '',
+      data,
     }
   }
 }

@@ -3,6 +3,7 @@ import { basePort } from '../../constants/common'
 // import { baseURL } from '../../constants/common';
 import { ip } from '../../utils/ip'
 import prisma from '../../utils/db'
+import { answerFace } from '../../constants/interfaces'
 
 /**
  * Test Service
@@ -112,7 +113,38 @@ export default class Exam extends Service {
   }
 
   // 提交 exam
-  public async submit() {
-    console.log('submit')
+  public async submit(tag: string, answers: answerFace[], userid: string) {
+    if (!answers) return { err: '答案不能为空' }
+    const questions = await prisma.question.findMany({
+      where: {
+        tag,
+      },
+      select: {
+        id: true,
+        answer: true,
+      },
+    })
+    const exams = questions.map(question => ({
+      questionId: question.id,
+      answer: question.answer,
+      received: answers.find(answer => answer.questionId === question.id)?.answer,
+    }))
+    const score = Math.round(exams.filter(item => item.received === item.answer).length * 100 / questions.length)
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userid,
+      },
+    })
+    if (!user) return { err: '用户不存在' }
+    await prisma.exam.create({
+      data: {
+        examineeId: user.id,
+        email: user.email,
+        phone: user.phone,
+        score,
+      },
+    })
+
+    return { score, exam: exams }
   }
 }
