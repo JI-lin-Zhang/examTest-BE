@@ -15,12 +15,11 @@ export default class Question extends Service {
    * @param id - a question's id
    */
   public async findQuestionById(id: string) {
-    const user = await prisma.user.findUnique({
+    return prisma.question.findUnique({
       where: {
         id,
       },
     })
-    return user
   }
 
   public async deleteQuestionById(id: string) {

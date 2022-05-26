@@ -20,6 +20,7 @@ export default (app: Application) => {
   router.post('/question/find', controller.questionController.find)
   router.delete('/question', controller.questionController.delete)
   router.post('/question', controller.questionController.add)
+  router.get('/question', controller.questionController.get)
   router.post('/option', controller.optionController.add)
   // 查询当天参加考试题的人数
   router.get('/user/today', controller.userController.getTodayUser)

@@ -50,7 +50,7 @@ export default class QuestionController extends Controller {
 
   /**
    * @Router POST /question/find
-   * @Request body string *tag eg:{"tag":"frontend"} 查找 question
+   * @Request body string *tag eg:{"tag":"frontend"} 根据tag查找 question
    */
   async find() {
     const { ctx } = this
@@ -68,16 +68,22 @@ export default class QuestionController extends Controller {
   }
 
   /**
-   * @Router POST /question
-   * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 查找 question
+   * @Router GET /question
+   * @Request query string page eg:"?id=b4ff9-23rhoa" 获取问题列表
    */
 
-  async question() {
+  async get() {
     const { ctx } = this
-    const { id } = ctx.request.body
-    const data = await ctx.service.question.findQuestionById(id)
+    const { id } = ctx.request.query
+    if (id) {
+      const data = await ctx.service.question.findQuestionById(id)
+      ctx.body = {
+        data,
+      }
+      return
+    }
     ctx.body = {
-      data,
+      err: '请提供题目的 id',
     }
   }
 
