@@ -25,6 +25,7 @@ model user {
   // 性别
   score    Int?
   // 分数
+  exams    exam[]
   createAt DateTime @default(now()) @map("create_at")
   // 创建时间
   updateAt DateTime @updatedAt @map("update_at")
@@ -36,14 +37,16 @@ model user {
 
 // 文件模型
 model exam {
-  id         String   @id @unique @default(uuid())
+  id             String   @id @unique @default(uuid())
   // 建立表的关联关系
-  email      String?  @default("")
-  phone      Int?
-  score      Int?
-  examineeId String   @default("") @map("examinee_id")
+  email          String?  @default("")
+  phone          Int?
+  score          Int?
   // 作者ID 关联用户的ID
-  createAt   DateTime @default(now()) @map("create_at")
+  user           user?    @relation(fields: [examineeId], references: [id])
+  examineeId     String   @default("") @map("examinee_id")
+  choosedChoices String?  @map("choosed_choices")
+  createAt       DateTime @default(now()) @map("create_at")
   // 创建时间
 
   @@map("exams")

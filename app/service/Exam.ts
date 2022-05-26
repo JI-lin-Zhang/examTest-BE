@@ -142,6 +142,7 @@ export default class Exam extends Service {
         email: user.email,
         phone: user.phone,
         score,
+        choosedChoices: JSON.stringify(exams),
       },
     })
 
