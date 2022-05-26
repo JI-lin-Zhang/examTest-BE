@@ -140,10 +140,10 @@ export default class User extends Service {
   public async lastSevenDay() {
     // 查询出最近7天的用户数据,按day分组汇总
     const dateArr: any[] = await prisma.$queryRawUnsafe(`
-     select day,count(1) as num from (
-         select date(update_at/1000, 'unixepoch', '+8 hours') as day from users
-        where day>date('now','+8 hours','-7 days')
-      ) a group by day
+    select day,count(1) as num from (
+      select date(create_at/1000, 'unixepoch', '+8 hours') as day from exams
+     where day>date('now','+8 hours','-6 days')
+   ) a group by day
     `)
 
     // 创建空对象
@@ -157,8 +157,9 @@ export default class User extends Service {
     const newArr: any[] = []
     for (let i = 0; i < 7; i++) {
       const date = new Date()
-      date.setDate(date.getDate() - 7 + i)
+      date.setDate(date.getDate() - 6 + i)
       date.setHours(8)
+
       const day = date.toJSON().slice(0, 10)
       const obj = {
         day,
