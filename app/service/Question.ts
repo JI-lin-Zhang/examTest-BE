@@ -1,8 +1,10 @@
 import { Service } from 'egg'
 import prisma from '../../utils/db'
 export interface CreateQuestionFace {
-  title: string;
-  answer: number;
+  title: string
+  answer: number
+  tag?: string
+  choices?: string[]
 }
 
 /**
@@ -37,14 +39,17 @@ export default class Question extends Service {
   }
 
   public async createQuestion(question: CreateQuestionFace) {
-    const { title, answer } = question
+    const { title, answer, tag, choices } = question
     // 创建用户
+    const choicesStr = choices ? JSON.stringify(choices) : ''
     try {
       return await prisma.question.create({
         // 调用prisma的创建功能
         data: {
           title,
           answer,
+          tag: tag ?? '',
+          choices: choicesStr,
         },
       })
     } catch (err) {

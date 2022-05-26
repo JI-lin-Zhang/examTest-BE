@@ -10,9 +10,9 @@ export default class QuestionController extends Controller {
    */
   async add() {
     const { ctx } = this
-    const { title, answer } = ctx.request.body
+    const { title, answer, tag, choices } = ctx.request.body
     if (title) {
-      const res: any = await ctx.service.question.createQuestion({ title, answer })
+      const res: any = await ctx.service.question.createQuestion({ title, answer, tag, choices })
       if (res?.meta?.target) {
         ctx.body = {
           err: `提交失败。 ${res.meta.target} 已经存在了。`,

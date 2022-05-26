@@ -52,6 +52,7 @@ model exam {
 model question {
   id       String   @id @unique @default(uuid())
   title    String   @default("")
+  choices  String   @default("")
   options  Option[]
   answer   Int
   tag      String   @default("frontend")
