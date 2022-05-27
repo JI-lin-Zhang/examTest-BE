@@ -1,4 +1,5 @@
 import { Service } from 'egg'
+import { questionFace } from '../../constants/interfaces'
 import prisma from '../../utils/db'
 export interface CreateQuestionFace {
   title: string
@@ -95,13 +96,10 @@ export default class Question extends Service {
     }
   }
 
-  public async updateAnswer(id: string, answer: number) {
-    // const user = await prisma.user.findFirst(); // 查找第一个用户
+  public async update(id: string, data: questionFace) {
     return prisma.question.update({
       where: { id },
-      data: {
-        answer,
-      },
+      data,
     })
   }
 }

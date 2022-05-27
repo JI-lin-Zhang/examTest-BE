@@ -1,4 +1,6 @@
 import { Controller } from 'egg'
+import { questionFace } from '../../constants/interfaces'
+import Joi from 'joi'
 
 /**
  * @Controller question
@@ -107,12 +109,32 @@ export default class QuestionController extends Controller {
     }
   }
 
-  async updateQuestion() {
+  async update() {
     const { ctx } = this
-    const { id, answer } = ctx.request.body
-    const res = await ctx.service.question.updateAnswer(id, answer)
-    ctx.body = {
-      data: res,
+    const { id, data } = ctx.request.body
+    const keys = Object.keys(data as Partial<questionFace> ?? {})
+    if (!data || keys.length === 0) {
+      ctx.body = {
+        err: '请提交要更新的字段',
+      }
+      return
+    }
+    const schema = Joi.object({
+      answer: Joi.number().error(new Error('答案格式不正确')),
+      title: Joi.string().error(new Error('问题格式不正确')),
+      choices: Joi.string().error(new Error('选项格式不正确')),
+      tag: Joi.string().error(new Error('标签格式不正确')),
+    })
+    try {
+      const value = await schema.validateAsync(data)
+      const res = await ctx.service.question.update(id, value)
+      ctx.body = {
+        data: res,
+      }
+    } catch (err) {
+      ctx.body = {
+        err: `${err}`,
+      }
     }
   }
 }

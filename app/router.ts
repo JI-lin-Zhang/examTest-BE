@@ -28,6 +28,7 @@ export default (app: Application) => {
   router.delete('/question', controller.questionController.delete)
   router.post('/question', controller.questionController.add)
   router.get('/question', controller.questionController.get)
+  router.put('/question', controller.questionController.update)
 
   // option
   router.post('/option', controller.optionController.add)
