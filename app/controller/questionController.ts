@@ -34,7 +34,7 @@ export default class QuestionController extends Controller {
 
   /**
    * @Router GET /question
-   * @Request query string page eg:"?id=b4ff9-23rhoa ?tag=frontend" 获取一个问题或问题列表
+   * @Request query string tag eg:"?id=b4ff9-23rhoa ?tag=frontend" 获取一个问题或问题列表
    */
 
   async get() {

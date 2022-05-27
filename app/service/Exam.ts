@@ -78,6 +78,19 @@ export default class Exam extends Service {
   }
 
   /**
+   * find exam by tag
+   * @param tag - an exam's tag
+   */
+  public async findExamByTag(tag: string) {
+    const exams = await prisma.exam.findMany({
+      where: {
+        tag,
+      },
+    })
+    return exams
+  }
+
+  /**
    * find exam by examineeId
    * @param examineeId - an exam's examineeId
    */

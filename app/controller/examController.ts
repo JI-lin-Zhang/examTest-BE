@@ -19,13 +19,27 @@ export default class ExamsController extends Controller {
     }
   }
   /**
-   * @Router POST /exam/find
-   * @Request body string *id eg:{"id":"05db79b7-5d4c-453c-b635-e353db0f3f1f"} 查找 exam
+   * @Router GET /exam
+   * @Request query string tag eg:"?id=93ed1626-0de8-4d51-8ffd-3fdb3b8d8412 ?tag=frontend" 获取一个exam或exam列表
    */
-  async find() {
+  async get() {
     const { ctx } = this
-    const { id } = ctx.request.body
-    const data = await ctx.service.exam.findExamById(id)
+    const { id, tag } = ctx.request.query
+    if (id) {
+      const data = await ctx.service.exam.findExamById(id)
+      ctx.body = {
+        data,
+      }
+      return
+    }
+    if (tag) {
+      const data = await ctx.service.exam.findExamByTag(tag)
+      ctx.body = {
+        data,
+      }
+      return
+    }
+    const data = await ctx.service.exam.getAllExams()
     ctx.body = {
       data,
     }
@@ -57,22 +71,6 @@ export default class ExamsController extends Controller {
     const scoreMsg = `分数是 ${examScore}`
     ctx.body = {
       data: scoreMsg,
-    }
-  }
-  /**
-   * @Router GET /exams
-   */
-  async exams() {
-    const { ctx } = this
-    const getExamsRes: any = await ctx.service.exam.getAllExams()
-    if (getExamsRes.err) {
-      ctx.body = {
-        err: '查找失败。',
-      }
-      return
-    }
-    ctx.body = {
-      data: getExamsRes,
     }
   }
 

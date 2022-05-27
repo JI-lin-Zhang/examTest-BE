@@ -8,9 +8,8 @@ export default (app: Application) => {
   router.get('/test', controller.home.index)
 
   // exam
-  router.get('/exams', controller.examController.exams)
   router.post('/exam', controller.examController.add) // 之前的 invite
-  router.post('/exam/find', controller.examController.find)
+  router.get('/exam', controller.examController.get)
   router.delete('/exam', controller.examController.delete)
   router.post('/submitExam', controller.examController.submitExam) // 前端校验答卷
   router.post('/exam/submit', controller.examController.submit) // 后端校验答卷
