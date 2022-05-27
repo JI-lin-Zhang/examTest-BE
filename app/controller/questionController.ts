@@ -109,6 +109,10 @@ export default class QuestionController extends Controller {
     }
   }
 
+  /**
+   * @Router PUT /question
+   * @Request body questionPut *desc title, tag, answer, choices至少提供一项
+   */
   async update() {
     const { ctx } = this
     const { id, data } = ctx.request.body
@@ -122,7 +126,7 @@ export default class QuestionController extends Controller {
     const schema = Joi.object({
       answer: Joi.number().error(new Error('答案格式不正确')),
       title: Joi.string().error(new Error('问题格式不正确')),
-      choices: Joi.string().error(new Error('选项格式不正确')),
+      choices: Joi.array().items(Joi.string()).error(new Error('选项格式不正确')),
       tag: Joi.string().error(new Error('标签格式不正确')),
     })
     try {

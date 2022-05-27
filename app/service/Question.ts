@@ -97,9 +97,15 @@ export default class Question extends Service {
   }
 
   public async update(id: string, data: questionFace) {
-    return prisma.question.update({
-      where: { id },
-      data,
-    })
+    try {
+      return await prisma.question.update({
+        where: {
+          id,
+        },
+        data: data.choices ? { ...data, choices: JSON.stringify(data.choices) } : data,
+      })
+    } catch (err: any) {
+      return { err: err.meta.cause }
+    }
   }
 }
