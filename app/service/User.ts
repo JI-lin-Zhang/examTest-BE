@@ -91,16 +91,6 @@ export default class User extends Service {
     }
   }
 
-  // 返回所有用户
-  async getAllUsers() {
-    try {
-      return await prisma.user.findMany()
-    } catch (err) {
-      console.log(err)
-      return err
-    }
-  }
-
   public async submitQuestionnaire(id: string, score: number) {
     // const user = await prisma.user.findFirst(); // 查找第一个用户
     return prisma.user.update({

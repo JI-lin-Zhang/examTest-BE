@@ -27,25 +27,7 @@ export default class UserController extends Controller {
   }
 
   /**
-   * @Router GET /users
-   * @Request query string page eg:"?page=1" 获取用户列表
-   */
-  async users() {
-    const { ctx } = this
-    const getUsersRes: any = await ctx.service.user.getAllUsers()
-    if (getUsersRes.err) {
-      ctx.body = {
-        err: '查找失败。',
-      }
-      return
-    }
-    ctx.body = {
-      data: getUsersRes,
-    }
-  }
-
-  /**
-   * @Router POST /user/find
+   * @Router GET /user
    * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 查找 user
    */
 

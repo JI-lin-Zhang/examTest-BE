@@ -20,7 +20,6 @@ export default (app: Application) => {
   router.get('/user', controller.userController.find)
   router.post('/user/updateScore', controller.userController.updateScore)
   router.delete('/user', controller.userController.delete)
-  router.get('/users', controller.userController.users)
 
   // question
   router.get('/questions', controller.questionController.questions)
