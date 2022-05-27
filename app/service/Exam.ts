@@ -9,12 +9,13 @@ import { answerFace } from '../../constants/interfaces'
  * Test Service
  */
 export default class Exam extends Service {
-  public async createExam(examineeId: string) {
+  public async createExam(examineeId: string, tag?: string) {
     // const user = await prisma.user.findFirst(); // 查找第一个用户
     return prisma.exam.create({
     // 调用创建文章内容的方法
       data: {
         examineeId,
+        tag: tag ?? 'frontend',
         // examineeId: user.id,
         // 填写进去相应的数据
       },
@@ -143,6 +144,7 @@ export default class Exam extends Service {
         phone: user.phone,
         score,
         choosedChoices: JSON.stringify(exams),
+        tag,
       },
     })
 

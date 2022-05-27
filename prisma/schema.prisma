@@ -46,6 +46,7 @@ model exam {
   user           user?    @relation(fields: [examineeId], references: [id])
   examineeId     String   @default("") @map("examinee_id")
   choosedChoices String?  @map("choosed_choices")
+  tag            String
   createAt       DateTime @default(now()) @map("create_at")
   // 创建时间
 
