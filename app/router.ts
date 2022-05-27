@@ -22,8 +22,6 @@ export default (app: Application) => {
   router.delete('/user', controller.userController.delete)
 
   // question
-  router.get('/questions', controller.questionController.questions)
-  router.post('/question/find', controller.questionController.find)
   router.delete('/question', controller.questionController.delete)
   router.post('/question', controller.questionController.add)
   router.get('/question', controller.questionController.get)

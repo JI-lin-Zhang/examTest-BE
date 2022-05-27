@@ -33,50 +33,13 @@ export default class QuestionController extends Controller {
   }
 
   /**
-   * @Router GET /questions
-   * @Request query string page eg:"?tag=frontend" 获取问题列表
-   */
-  async questions() {
-    const { ctx } = this
-    const res: any = await ctx.service.question.getAllQuestions()
-    if (res.err) {
-      ctx.body = {
-        err: '查找失败。',
-      }
-      return
-    }
-    ctx.body = {
-      data: res,
-    }
-  }
-
-  /**
-   * @Router POST /question/find
-   * @Request body string *tag eg:{"tag":"frontend"} 根据tag查找 question
-   */
-  async find() {
-    const { ctx } = this
-    const { tag } = ctx.request.body
-    const res: any = await ctx.service.question.getQuestionsByTag(tag)
-    if (res.err) {
-      ctx.body = {
-        err: '查找失败。',
-      }
-      return
-    }
-    ctx.body = {
-      data: res,
-    }
-  }
-
-  /**
    * @Router GET /question
-   * @Request query string page eg:"?id=b4ff9-23rhoa" 获取问题列表
+   * @Request query string page eg:"?id=b4ff9-23rhoa ?tag=frontend" 获取一个问题或问题列表
    */
 
   async get() {
     const { ctx } = this
-    const { id } = ctx.request.query
+    const { id, tag } = ctx.request.query
     if (id) {
       const data = await ctx.service.question.findQuestionById(id)
       ctx.body = {
@@ -84,8 +47,22 @@ export default class QuestionController extends Controller {
       }
       return
     }
+    if (tag) {
+      const data = await ctx.service.question.getQuestionsByTag(tag)
+      if (data.err) {
+        ctx.body = {
+          err: data.err,
+        }
+        return
+      }
+      ctx.body = {
+        data,
+      }
+      return
+    }
+    const data = await ctx.service.question.getAllQuestions()
     ctx.body = {
-      err: '请提供题目的 id',
+      data,
     }
   }
 

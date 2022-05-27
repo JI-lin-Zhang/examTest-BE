@@ -22,6 +22,12 @@ export default class Question extends Service {
       where: {
         id,
       },
+      select: {
+        id: true,
+        title: true,
+        choices: true,
+        tag: true,
+      },
     })
   }
 
@@ -67,8 +73,11 @@ export default class Question extends Service {
     }
     try {
       return prisma.question.findMany({
-        include: {
-          options: true,
+        select: {
+          id: true,
+          title: true,
+          choices: true,
+          tag: true,
         },
       })
     } catch (err) {
@@ -87,7 +96,8 @@ export default class Question extends Service {
         select: {
           id: true,
           title: true,
-          options: true,
+          choices: true,
+          tag: true,
         },
       })
     } catch (err) {
