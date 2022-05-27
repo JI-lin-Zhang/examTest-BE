@@ -89,7 +89,7 @@ export default class Question extends Service {
   // 根据标签返回问题
   async getQuestionsByTag(tag: string) {
     try {
-      return prisma.question.findMany({
+      return await prisma.question.findMany({
         where: {
           tag,
         },
@@ -100,7 +100,7 @@ export default class Question extends Service {
           tag: true,
         },
       })
-    } catch (err) {
+    } catch (err: any) {
       console.log(err)
       return err
     }
