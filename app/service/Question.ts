@@ -47,16 +47,14 @@ export default class Question extends Service {
 
   public async createQuestion(question: CreateQuestionFace) {
     const { title, answer, tag, choices } = question
-    // 创建用户
-    const choicesStr = choices ? JSON.stringify(choices) : ''
+    // const choicesStr = choices ? JSON.stringify(choices) : ''
     try {
       return await prisma.question.create({
-        // 调用prisma的创建功能
         data: {
           title,
           answer,
           tag: tag ?? '',
-          choices: choicesStr,
+          choices,
         },
       })
     } catch (err) {
