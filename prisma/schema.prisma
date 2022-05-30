@@ -30,7 +30,10 @@ model user {
   // 创建时间
   updateAt DateTime @updatedAt @map("update_at")
   // 更新时间
-  // 给数据表进行命名
+  deleted Boolean @default(false)
+  // 是否删除
+  deletedAt DateTime? @map("deleted_at")
+  // 删除时间
 
   @@map("users")
 }
