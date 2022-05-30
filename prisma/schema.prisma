@@ -11,26 +11,26 @@ datasource db {
 }
 
 model user {
-  id       String   @id @unique @default(uuid())
+  id        String    @id @unique @default(uuid())
   // 用户ID                不能重复  默认为UUID
-  username String   @unique @map("user_name")
+  username  String    @unique @map("user_name")
   // 用户名           不能重复 @map表示为字段定义别名
-  phone    Int?     @unique
+  phone     Int?      @unique
   // 手机号
-  email    String?  @unique @default("")
+  email     String?   @unique @default("")
   // 邮箱
-  address  String?  @default("")
+  address   String?   @default("")
   // 地址
-  gender   String?  @default("")
+  gender    String?   @default("")
   // 性别
-  score    Int?
+  score     Int?
   // 分数
-  exams    exam[]
-  createAt DateTime @default(now()) @map("create_at")
+  exams     exam[]
+  createAt  DateTime  @default(now()) @map("create_at")
   // 创建时间
-  updateAt DateTime @updatedAt @map("update_at")
+  updateAt  DateTime  @updatedAt @map("update_at")
   // 更新时间
-  deleted Boolean @default(false)
+  deleted   Boolean   @default(false)
   // 是否删除
   deletedAt DateTime? @map("deleted_at")
   // 删除时间
