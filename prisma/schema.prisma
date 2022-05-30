@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -56,7 +56,7 @@ model exam {
 model question {
   id       String   @id @unique @default(uuid())
   title    String   @default("")
-  choices  String   @default("")
+  choices  Json     @default("[]")
   options  Option[]
   answer   Int
   tag      String   @default("frontend")
