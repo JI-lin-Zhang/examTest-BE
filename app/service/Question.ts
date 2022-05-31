@@ -65,7 +65,7 @@ export default class Question extends Service {
   }
 
   // 返回所有问题
-  async getAllQuestions(tag?: string) {
+  async getAllQuestions(tag?: string, include?: string) {
     if (tag) {
       return this.getQuestionsByTag(tag)
     }
@@ -76,6 +76,7 @@ export default class Question extends Service {
           title: true,
           choices: true,
           tag: true,
+          answer: include === 'answer',
         },
       })
     } catch (err) {

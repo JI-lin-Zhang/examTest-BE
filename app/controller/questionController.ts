@@ -39,7 +39,7 @@ export default class QuestionController extends Controller {
 
   async get() {
     const { ctx } = this
-    const { id, tag } = ctx.request.query
+    const { id, tag, include } = ctx.request.query
     if (id) {
       const data = await ctx.service.question.findQuestionById(id)
       ctx.body = {
@@ -60,7 +60,7 @@ export default class QuestionController extends Controller {
       }
       return
     }
-    const data = await ctx.service.question.getAllQuestions()
+    const data = await ctx.service.question.getAllQuestions(tag, include)
     ctx.body = {
       data,
     }
