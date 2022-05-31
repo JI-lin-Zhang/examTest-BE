@@ -43,7 +43,7 @@ export default class UserController extends Controller {
     }
     let obj = {}
     if (query.username) {
-      obj = { ...obj, username: query.username }
+      obj = { ...obj, username: { contains: query.username } }
     }
     if (query.email) {
       obj = { ...obj, email: query.email }
