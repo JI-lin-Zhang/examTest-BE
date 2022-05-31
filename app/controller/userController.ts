@@ -8,7 +8,7 @@ export default class UserController extends Controller {
     const { ctx } = this
     const { username, email, phone } = ctx.request.body
     if (username) {
-      const createUserRes: any = await ctx.service.user.createUser({ username, email, phone: parseInt(phone, 10) })
+      const createUserRes: any = await ctx.service.user.createUser({ username, email, phone })
       if (createUserRes?.meta?.target) {
         ctx.body = {
           err: `提交失败。 ${createUserRes.meta.target} 已经存在了。`,
@@ -49,7 +49,7 @@ export default class UserController extends Controller {
       obj = { ...obj, email: query.email }
     }
     if (query.phone) {
-      obj = { ...obj, phone: parseInt(query.phone, 10) }
+      obj = { ...obj, phone: query.phone }
     }
     const data = await ctx.service.user.findUser(obj)
     ctx.body = {

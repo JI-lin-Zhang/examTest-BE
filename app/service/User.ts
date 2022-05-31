@@ -3,7 +3,7 @@ import prisma from '../../utils/db'
 export interface CreateUserFace {
   username: string
   email: string;
-  phone: number;
+  phone: string;
 }
 
 /**
@@ -18,7 +18,7 @@ export default class User extends Service {
   public async findUserByPhone(phone: string) {
     const user = await prisma.user.findUnique({
       where: {
-        phone: parseInt(phone, 10),
+        phone,
       },
     })
     return user

@@ -45,7 +45,7 @@ export default class Exam extends Service {
   public async findExamByPhone(phone: string) {
     const exam = await prisma.exam.findMany({
       where: {
-        phone: parseInt(phone, 10),
+        phone,
       },
     })
     return exam
