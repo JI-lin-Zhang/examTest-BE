@@ -110,7 +110,7 @@ export default class Question extends Service {
         where: {
           id,
         },
-        data: data.choices ? { ...data, choices: JSON.stringify(data.choices) } : data,
+        data,
       })
     } catch (err: any) {
       return { err: err.meta.cause }
