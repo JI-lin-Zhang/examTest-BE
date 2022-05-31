@@ -17,7 +17,7 @@ export default class Question extends Service {
    * find question by id
    * @param id - a question's id
    */
-  public async findQuestionById(id: string) {
+  public async findQuestionById(id: string, include?: string) {
     return prisma.question.findUnique({
       where: {
         id,
@@ -27,6 +27,7 @@ export default class Question extends Service {
         title: true,
         choices: true,
         tag: true,
+        answer: include === 'answer',
       },
     })
   }
@@ -86,7 +87,7 @@ export default class Question extends Service {
   }
 
   // 根据标签返回问题
-  async getQuestionsByTag(tag: string) {
+  async getQuestionsByTag(tag: string, include?: string) {
     try {
       return await prisma.question.findMany({
         where: {
@@ -97,6 +98,7 @@ export default class Question extends Service {
           title: true,
           choices: true,
           tag: true,
+          answer: include === 'answer',
         },
       })
     } catch (err: any) {

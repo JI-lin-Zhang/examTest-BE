@@ -41,14 +41,14 @@ export default class QuestionController extends Controller {
     const { ctx } = this
     const { id, tag, include } = ctx.request.query
     if (id) {
-      const data = await ctx.service.question.findQuestionById(id)
+      const data = await ctx.service.question.findQuestionById(id, include)
       ctx.body = {
         data,
       }
       return
     }
     if (tag) {
-      const data = await ctx.service.question.getQuestionsByTag(tag)
+      const data = await ctx.service.question.getQuestionsByTag(tag, include)
       if (data.err) {
         ctx.body = {
           err: data.err,
