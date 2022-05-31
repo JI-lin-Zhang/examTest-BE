@@ -114,7 +114,7 @@ export default class User extends Service {
     // 获取当天的时间
     const date = new Date()
     // 获取当天时间的 00:00:00:00
-    date.setHours(8, 0, 0, 0)
+    date.setHours(0, 0, 0, 0)
 
     const todayTotal = await prisma.user.count({
       where: {
@@ -128,36 +128,16 @@ export default class User extends Service {
 
   // 查询最近7天的参加考试的人数
   public async lastSevenDay() {
-    // 查询出最近7天的用户数据,按day分组汇总
-    const dateArr: any[] = await prisma.$queryRawUnsafe(`
-    select day,count(1) as num from (
-      select date(create_at/1000, 'unixepoch', '+8 hours') as day from exams
-     where day>date('now','+8 hours','-6 days')
-   ) a group by day
+    return await prisma.$queryRawUnsafe(`
+      select b.day, count(a.day) as num from (
+        -- 得到7天内有数据的日期列表
+        select to_char(to_timestamp(extract(epoch from create_at)), 'YYYY-MM-DD') as day
+        from exams where create_at > date_trunc('day', now() - interval '6 days')
+      ) as a right join (
+        -- 生成7天内的完整日期列表
+        select to_char(ts, 'YYYY-MM-DD') as day
+        from generate_series(now() - interval '6 days', now(), '1 day') as ts
+      ) as b on a.day=b.day group by b.day order by b.day
     `)
-
-    // 创建空对象
-    const newObj = {}
-
-    dateArr.forEach(item => {
-      // 设置newObj的键值对
-      newObj[item.day] = item.num
-    })
-
-    const newArr: any[] = []
-    for (let i = 0; i < 7; i++) {
-      const date = new Date()
-      date.setDate(date.getDate() - 6 + i)
-      date.setHours(8)
-
-      const day = date.toJSON().slice(0, 10)
-      const obj = {
-        day,
-        // 如果没有数据,就用0填充, 空值合并操作符
-        num: newObj[day] ?? 0,
-      }
-      newArr.push(obj)
-    }
-    return newArr
   }
 }
