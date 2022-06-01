@@ -90,9 +90,9 @@ export default class QuestionController extends Controller {
    * @Router PUT /question
    * @Request body questionPut *desc title, tag, answer, choices至少提供一项
    */
-  async update() {
+  async put() {
     const { ctx } = this
-    const { id, data } = ctx.request.body
+    const { id, ...data } = ctx.request.body
     const keys = Object.keys(data as Partial<questionFace> ?? {})
     if (!data || keys.length === 0) {
       ctx.body = {
