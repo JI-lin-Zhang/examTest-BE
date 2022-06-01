@@ -127,8 +127,17 @@ export default class Exam extends Service {
   }
 
   // 提交 exam
-  public async submit(tag: string, answers: answerFace[], userid: string) {
+  public async submit(tag: string, answers: answerFace[], examId: string) {
     if (!answers) return { err: '答案不能为空' }
+    const exam = await prisma.exam.findUnique({
+      where: {
+        id: examId,
+      },
+    })
+    if (!exam) return { err: '试卷ID 不存在' }
+    if (exam.score !== null) return { err: '已经提交过了' }
+    if (Date.now() - exam.createAt.getTime() > 30 * 60 * 1000) return { err: '答题时间超过30分钟' }
+    // 加载标准答案
     const questions = await prisma.question.findMany({
       where: {
         tag,
@@ -138,29 +147,22 @@ export default class Exam extends Service {
         answer: true,
       },
     })
+    // 填入用户答案
     const exams = questions.map(question => ({
       questionId: question.id,
       answer: question.answer,
       received: answers.find(answer => answer.questionId === question.id)?.answer,
     }))
     const score = Math.round(exams.filter(item => item.received === item.answer).length * 100 / (questions.length || 1))
-    const user = await prisma.user.findFirst({
+    await prisma.exam.update({
       where: {
-        id: userid,
+        id: examId,
       },
-    })
-    if (!user) return { err: '用户不存在' }
-    await prisma.exam.create({
       data: {
-        examineeId: user.id,
-        email: user.email,
-        phone: user.phone,
         score,
         choosedChoices: JSON.stringify(exams),
-        tag,
       },
     })
-
     return { score, exam: exams }
   }
 }
