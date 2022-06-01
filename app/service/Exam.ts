@@ -143,8 +143,8 @@ export default class Exam extends Service {
       answer: question.answer,
       received: answers.find(answer => answer.questionId === question.id)?.answer,
     }))
-    const score = Math.round(exams.filter(item => item.received === item.answer).length * 100 / questions.length)
-    const user = await prisma.user.findUnique({
+    const score = Math.round(exams.filter(item => item.received === item.answer).length * 100 / (questions.length || 1))
+    const user = await prisma.user.findFirst({
       where: {
         id: userid,
       },

@@ -20,7 +20,6 @@ db.$use(async (params, next) => {
         break
       case 'findMany':
       case 'findFirst':
-      case 'findUnique':
         params.args.where ??= {}
         params.args.where.deleted = false
         break
