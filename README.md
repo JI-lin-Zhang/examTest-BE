@@ -33,5 +33,11 @@ $ npm start
 
 ### Requirement
 
-- Node.js 8.x
-- Typescript 4.6+
+- Node.js 16.5+
+- Typescript 4.7+
+
+### How to export the data from egg_exam_service
+pg_dump -U postgres -d egg_exam_service -f "C:\Users\yourname\Desktop\egg_exam_service.dmp"
+
+### How to import the data to egg_exam_service
+psql -U postgres -d egg_exam_service -f "C:\Users\yourname\Desktop\egg_exam_service.dmp" or use pg_restore.
