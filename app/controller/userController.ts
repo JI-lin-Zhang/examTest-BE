@@ -10,8 +10,9 @@ export default class UserController extends Controller {
     if (username) {
       const createUserRes: any = await ctx.service.user.createUser({ username, email, phone })
       if (createUserRes?.meta) {
+        ctx.status = 400
         ctx.body = {
-          err: '提交失败。用户已经存在了。',
+          message: '用户已经存在了',
         }
         return
       }
