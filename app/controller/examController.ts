@@ -83,7 +83,8 @@ export default class ExamsController extends Controller {
     const { inviteId, examineeId, tag, answers } = ctx.request.body
     const data = await ctx.service.exam.submit(tag, answers, inviteId)
     if (data.err) {
-      ctx.body = { err: data.err }
+      ctx.status = 400
+      ctx.body = { message: data.err }
       return
     }
     await ctx.service.user.submitQuestionnaire(examineeId, data.score ?? 0)
