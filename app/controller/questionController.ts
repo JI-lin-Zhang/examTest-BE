@@ -81,6 +81,11 @@ export default class QuestionController extends Controller {
       return
     }
     const data = await ctx.service.question.deleteQuestionById(id)
+    if ('message' in data) {
+      ctx.status = 400
+      ctx.body = data
+      return
+    }
     ctx.body = {
       data,
     }

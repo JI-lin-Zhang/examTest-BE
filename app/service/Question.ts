@@ -41,8 +41,9 @@ export default class Question extends Service {
       })
       return user
     } catch (err) {
-      console.error(err)
-      return '删除失败'
+      return {
+        message: '删除失败',
+      }
     }
   }
 
