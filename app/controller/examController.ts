@@ -28,7 +28,7 @@ export default class ExamsController extends Controller {
     if (id) {
       const data = await ctx.service.exam.findExamById(id)
       ctx.body = {
-        data,
+        data: data ? [ data ] : [],
       }
       return
     }

@@ -38,7 +38,7 @@ export default class UserController extends Controller {
     if (query.id) {
       const data = await ctx.service.user.findUserById(query.id)
       ctx.body = {
-        data,
+        data: data ? [ data ] : [],
       }
       return
     }

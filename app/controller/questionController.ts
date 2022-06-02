@@ -43,7 +43,7 @@ export default class QuestionController extends Controller {
     if (id) {
       const data = await ctx.service.question.findQuestionById(id, include)
       ctx.body = {
-        data,
+        data: data ? [ data ] : [],
       }
       return
     }
