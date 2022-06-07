@@ -2,6 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportAuthController from '../../../app/controller/authController';
 import ExportExamController from '../../../app/controller/examController';
 import ExportHome from '../../../app/controller/home';
 import ExportOptionController from '../../../app/controller/optionController';
@@ -10,6 +11,7 @@ import ExportUserController from '../../../app/controller/userController';
 
 declare module 'egg' {
   interface IController {
+    authController: ExportAuthController;
     examController: ExportExamController;
     home: ExportHome;
     optionController: ExportOptionController;
