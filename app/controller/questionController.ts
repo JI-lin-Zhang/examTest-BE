@@ -1,5 +1,6 @@
 import { Controller } from 'egg'
 import { questionFace } from '../../constants/interfaces'
+import NodeKeycloak from 'node-keycloak';
 import Joi from 'joi'
 
 /**
@@ -39,16 +40,20 @@ export default class QuestionController extends Controller {
 
   async get() {
     const { ctx } = this
-    const { id, tag, include } = ctx.request.query
+    const { id, tag, include, token } = ctx.request.query
+    let realInclude = include
+    const isAdmin = (await NodeKeycloak.introspect(token)).active
+    if (!isAdmin) realInclude = ""
+
     if (id) {
-      const data = await ctx.service.question.findQuestionById(id, include)
+      const data = await ctx.service.question.findQuestionById(id, realInclude)
       ctx.body = {
-        data: data ? [ data ] : [],
+        data: data ? [data] : [],
       }
       return
     }
     if (tag) {
-      const data = await ctx.service.question.getQuestionsByTag(tag, include)
+      const data = await ctx.service.question.getQuestionsByTag(tag, realInclude)
       if (data.err) {
         ctx.body = {
           err: data.err,
@@ -60,7 +65,7 @@ export default class QuestionController extends Controller {
       }
       return
     }
-    const data = await ctx.service.question.getAllQuestions(tag, include)
+    const data = await ctx.service.question.getAllQuestions(tag, realInclude)
     ctx.body = {
       data,
     }

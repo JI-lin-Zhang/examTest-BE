@@ -1,7 +1,11 @@
 import { Application } from 'egg'
+import NodeKeycloak from 'node-keycloak';
+import { keyCloakConfig } from '../local-config';
 
-export default (app: Application) => {
-  const { controller, router } = app
+export default async (app: Application) => {
+  const { controller, router } = app;
+
+  await NodeKeycloak.configure(keyCloakConfig);
 
   // 用来 render html 的，备用
   router.get('/', controller.home.index)
