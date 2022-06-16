@@ -2,6 +2,7 @@ import { Controller } from 'egg'
 import { questionFace } from '../../constants/interfaces'
 import NodeKeycloak from 'node-keycloak';
 import Joi from 'joi'
+import { textChangeRangeIsUnchanged } from 'typescript';
 
 /**
  * @Controller question
@@ -40,7 +41,8 @@ export default class QuestionController extends Controller {
 
   async get() {
     const { ctx } = this
-    const { id, tag, include, token } = ctx.request.query
+    const { id, tag, include } = ctx.request.query
+    const token = ctx.request.headers.authorization as string
     let realInclude = include
     const isAdmin = (await NodeKeycloak.introspect(token)).active
     if (!isAdmin) realInclude = ""
