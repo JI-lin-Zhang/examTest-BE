@@ -1,9 +1,9 @@
-import { Controller } from 'egg'
+import { BaseController } from './BaseController'
 
 /**
  * @Controller user
  */
-export default class UserController extends Controller {
+export default class UserController extends BaseController {
   async add() {
     const { ctx } = this
     const { username, email, phone } = ctx.request.body
@@ -35,23 +35,15 @@ export default class UserController extends Controller {
   async find() {
     const { ctx } = this
     const query = ctx.query
+    if(await this.needAdmin()) return
     if (query.id) {
       const data = await ctx.service.user.findUserById(query.id)
       ctx.body = {
-        data: data ? [ data ] : [],
+        data: { list: data ? [ data ] : [], totalCount: data ? 1 : 0 },
       }
       return
     }
-    let obj = {}
-    if (query.username) {
-      obj = { ...obj, username: { contains: query.username } }
-    }
-    if (query.email) {
-      obj = { ...obj, email: query.email }
-    }
-    if (query.phone) {
-      obj = { ...obj, phone: query.phone }
-    }
+    const obj = { ...query, username: { contains: query.username ?? '' }, size: ~~query.size || 10, page: ~~query.page }
     const data = await ctx.service.user.findUser(obj)
     ctx.body = {
       data,
@@ -63,6 +55,7 @@ export default class UserController extends Controller {
    * @Request body string *id eg:{"id":"933e6c25-557a-4255-8e6f-92d8ff76683f"} 删除 user
    */
   async delete() {
+    if(await this.needAdmin()) return
     const { ctx } = this
     const { id } = ctx.request.body
     if (Array.isArray(id)) {

@@ -1,13 +1,11 @@
-import { Controller } from 'egg'
+import { BaseController } from './BaseController'
 import { questionFace } from '../../constants/interfaces'
-import NodeKeycloak from 'node-keycloak';
 import Joi from 'joi'
-import { textChangeRangeIsUnchanged } from 'typescript';
 
 /**
  * @Controller question
  */
-export default class QuestionController extends Controller {
+export default class QuestionController extends BaseController {
   /**
    * @Router POST /question
    * @Request body string *title eg:{"title":"在 css 选择器当中，优先级排序正确的是","answer":3} add question
@@ -42,9 +40,8 @@ export default class QuestionController extends Controller {
   async get() {
     const { ctx } = this
     const { id, tag, include } = ctx.request.query
-    const token = ctx.request.headers.authorization as string
     let realInclude = include
-    const isAdmin = (await NodeKeycloak.introspect(token)).active
+    const isAdmin = await this.isAdmin()
     if (!isAdmin) realInclude = ""
 
     if (id) {

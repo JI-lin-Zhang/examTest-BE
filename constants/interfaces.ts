@@ -12,3 +12,8 @@ export interface questionFace {
   choices: string
   tag: string
 }
+
+export interface pageSize {
+  size: number
+  page: number
+}

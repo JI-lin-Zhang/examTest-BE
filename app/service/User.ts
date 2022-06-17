@@ -1,11 +1,18 @@
 import { Service } from 'egg'
+import { pageSize } from '../../constants/interfaces'
 import prisma from '../../utils/db'
+import _ from 'lodash'
+
 export interface CreateUserFace {
   username: string
-  email: string;
-  phone: string;
+  email: string
+  phone: string
 }
-
+export interface FindUserFace {
+  username: { contains: string}
+  email: string
+  phone: string
+}
 /**
  * Test Service
  */
@@ -46,16 +53,48 @@ export default class User extends Service {
       where: {
         id,
       },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        phone: true,
+        address: true,
+        score: true,
+        updateAt: true,
+        gender: true,
+        createAt: true,
+        exams: true,
+      },
     })
     return user
   }
 
-  public async findUser(query: Partial<CreateUserFace>) {
-    return prisma.user.findMany({
-      where: {
-        ...query,
+  public async findUser(query: Partial<FindUserFace & pageSize>) {
+    const size = query.size ?? 10
+    let page = query.page ?? 1
+    const where = _.omit(query, ['size', 'page'])
+    const totalCount = await prisma.user.count({
+      where,
+    })
+    if(page < 1) page = 1
+    const list = await prisma.user.findMany({
+      where,
+      skip: (page - 1) * size,
+      take: size,
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        phone: true,
+        address: true,
+        score: true,
+        updateAt: true,
+        gender: true,
+        createAt: true,
+        exams: true,
       },
     })
+    return { list, totalCount }
   }
 
   public async deleteUserById(id: string) {
