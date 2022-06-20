@@ -12,6 +12,7 @@ export interface FindUserFace {
   username: { contains: string}
   email: string
   phone: string
+  tag: string
 }
 /**
  * Test Service
@@ -72,7 +73,7 @@ export default class User extends Service {
   public async findUser(query: Partial<FindUserFace & pageSize>) {
     const size = query.size ?? 10
     let page = query.page ?? 1
-    const where = _.omit(query, ['size', 'page'])
+    const where = Object.assign({}, { ..._.omit(query, ['size', 'page', 'tag']) }, !query.tag ? {} : { exams: { some: { tag: { contains: query.tag ?? '' }} } })
     const totalCount = await prisma.user.count({
       where,
     })
@@ -91,7 +92,7 @@ export default class User extends Service {
         updateAt: true,
         gender: true,
         createAt: true,
-        exams: true,
+        exams: !query.tag ? true : { where: { tag: query.tag! } },
       },
     })
     return { list, totalCount }
