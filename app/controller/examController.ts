@@ -10,8 +10,8 @@ export default class ExamsController extends Controller {
    */
   async add() {
     const { ctx } = this
-    const { examineeId } = ctx.request.body
-    const createExamRes = await ctx.service.exam.createExam(examineeId)
+    const { examineeId, tag } = ctx.request.body
+    const createExamRes = await ctx.service.exam.createExam(examineeId, tag)
     if (createExamRes) {
       ctx.body = {
         data: createExamRes.id,
