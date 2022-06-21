@@ -9,7 +9,7 @@ export class BaseController extends Controller {
   public async isAdmin() {
     const { ctx } = this;
     const { authorization } = ctx.request.headers;
-    const { active } = await NodeKeycloak.introspect(authorization as string ?? "");
+    const { active } = await NodeKeycloak.introspect((authorization as string ?? "").slice(7));
     return active
   }
 
