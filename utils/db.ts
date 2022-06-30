@@ -18,6 +18,7 @@ db.$use(async (params, next) => {
           deleted: true,
         }
         break
+      case 'count':
       case 'findMany':
       case 'findFirst':
         params.args.where ??= {}
