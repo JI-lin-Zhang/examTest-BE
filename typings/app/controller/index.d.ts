@@ -8,6 +8,7 @@ import ExportExamController from '../../../app/controller/examController';
 import ExportHome from '../../../app/controller/home';
 import ExportOptionController from '../../../app/controller/optionController';
 import ExportQuestionController from '../../../app/controller/questionController';
+import ExportSiteController from '../../../app/controller/siteController';
 import ExportUserController from '../../../app/controller/userController';
 
 declare module 'egg' {
@@ -18,6 +19,7 @@ declare module 'egg' {
     home: ExportHome;
     optionController: ExportOptionController;
     questionController: ExportQuestionController;
+    siteController: ExportSiteController;
     userController: ExportUserController;
   }
 }

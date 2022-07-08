@@ -79,3 +79,8 @@ model Option {
 
   @@map("options")
 }
+
+model siteconf {
+  cfgkey    String    @id @db.VarChar(32)
+  cfgval    String
+}
