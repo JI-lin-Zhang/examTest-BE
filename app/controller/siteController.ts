@@ -1,12 +1,13 @@
 import { BaseController } from "./BaseController"
 
 /**
- * @Controller Site
+ * @Controller Site 站点管理
  */
 export default class SiteController extends BaseController {
   /**
    * @Router GET /site/info
-   * @Request query cfgkey * 可选值有：info, tags
+   * @Summary 获取网站相关配置
+   * @Request query string *cfgkey 可选值：info|tags
    */
   async getInfo() {
     const { ctx } = this
@@ -16,7 +17,9 @@ export default class SiteController extends BaseController {
 
   /**
    * @Router PUT /site/info
-   * @Request body string * cfgkey:info|tags, cfgval:{}
+   * @Summary 更新网站相关配置
+   * @Request body SiteSetInfo *cfgkey cfgkey: info|tags, cfgval: {}
+   * @Description cfgkey: 需要更新的键名，可选值：info|tags<br />cfgval: 需要提供与 cfgkey 匹配的 JSON 配置内容。
    */
   async setInfo() {
     if(await this.needAdmin()) return
