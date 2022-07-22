@@ -12,7 +12,7 @@ export default class UserController extends BaseController {
       if (createUserRes?.meta) {
         ctx.status = 400
         ctx.body = {
-          message: '用户已经存在了',
+          message: `用户${({ email: "邮箱", phone: "电话", user_name: "姓名" })[ createUserRes.meta.target[0] ]} 已经存在了`,
         }
         return
       }
