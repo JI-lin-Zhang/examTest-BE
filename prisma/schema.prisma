@@ -62,7 +62,7 @@ model question {
   choices  String[]
   options  Option[]
   answer   Int
-  tag      String   @default("frontend")
+  tag      String   @default("react")
   createAt DateTime @default(now()) @map("create_at")
   updateAt DateTime @updatedAt @map("update_at")
 
@@ -80,7 +80,11 @@ model Option {
   @@map("options")
 }
 
-model siteconf {
-  cfgkey    String    @id @db.VarChar(32)
-  cfgval    String
+model siteConfig {
+  id String    @id @unique @default(uuid())
+  companyName String
+  siteNo      String
+  contactTel  String
+  address     String
+  tag         String[]
 }

@@ -43,6 +43,6 @@ export default async (app: Application) => {
   router.get('/callback', controller.authController.callback)
 
   // 网站配置
-  router.get('/site/info', controller.siteController.getInfo)
-  router.put('/site/info', controller.siteController.setInfo)
+  router.get('/site/info', controller.siteController.getSiteInfo)
+  router.put('/site/info', controller.siteController.setSiteInfo)
 }
