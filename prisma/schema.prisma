@@ -61,6 +61,7 @@ model question {
   title    String   @default("")
   choices  String[]
   options  Option[]
+  analysis String  @default("")
   answer   Int
   tag      String   @default("react")
   createAt DateTime @default(now()) @map("create_at")
