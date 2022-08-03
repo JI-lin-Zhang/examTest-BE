@@ -12,9 +12,9 @@ export default class QuestionController extends BaseController {
    */
   async add() {
     const { ctx } = this
-    const { title, answer, tag, choices } = ctx.request.body
+    const { title, answer, tag, choices, analysis } = ctx.request.body
     if (title) {
-      const res: any = await ctx.service.question.createQuestion({ title, answer, tag, choices })
+      const res: any = await ctx.service.question.createQuestion({ title, answer, tag, choices, analysis })
       if (res?.meta?.target) {
         ctx.body = {
           err: `提交失败。 ${res.meta.target} 已经存在了。`,
@@ -112,6 +112,7 @@ export default class QuestionController extends BaseController {
     const schema = Joi.object({
       answer: Joi.number().error(new Error('答案格式不正确')),
       title: Joi.string().error(new Error('问题格式不正确')),
+      analysis: Joi.string().error(new Error('解析格式不正确')),
       choices: Joi.array().items(Joi.string()).error(new Error('选项格式不正确')),
       tag: Joi.string().error(new Error('标签格式不正确')),
     })

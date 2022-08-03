@@ -5,6 +5,7 @@ export interface CreateQuestionFace {
   title: string
   answer: number
   tag?: string
+  analysis?: string
   choices?: string[]
 }
 
@@ -26,6 +27,7 @@ export default class Question extends Service {
         id: true,
         title: true,
         choices: true,
+        analysis: true,
         tag: true,
         answer: include === 'answer',
       },
@@ -48,13 +50,14 @@ export default class Question extends Service {
   }
 
   public async createQuestion(question: CreateQuestionFace) {
-    const { title, answer, tag, choices } = question
+    const { title, answer, tag, choices, analysis } = question
     // const choicesStr = choices ? JSON.stringify(choices) : ''
     try {
       return await prisma.question.create({
         data: {
           title,
           answer,
+          analysis,
           tag: tag ?? '',
           choices,
         },
@@ -77,6 +80,7 @@ export default class Question extends Service {
           id: true,
           title: true,
           choices: true,
+          analysis: true,
           tag: true,
           answer: include === 'answer',
         },
@@ -98,6 +102,7 @@ export default class Question extends Service {
           id: true,
           title: true,
           choices: true,
+          analysis: true,
           tag: true,
           answer: include === 'answer',
         },
