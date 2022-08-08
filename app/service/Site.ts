@@ -6,12 +6,7 @@ export default class SiteController extends Service {
 
   public async getConfig() {
     let config = await prisma.siteConfig.findFirst();
-    return config;
-  }
-
-  public async setConfig(id: string, siteInfo: ISiteInfo) {
-    const info = await this.getConfig()
-    if(!info){
+    if(!config){
       await prisma.siteConfig.create({
         data: {
           companyName: '',
@@ -20,20 +15,24 @@ export default class SiteController extends Service {
           address: '',
           tag: [],
         }
-      })
-    } else {
-      await prisma.siteConfig.update({
-        where: {
-          id: id
-        },
-        data: {
-          companyName: siteInfo.companyName,
-          siteNo: siteInfo.siteNo,
-          contactTel: siteInfo.contactTel,
-          address: siteInfo.address,
-          tag: siteInfo.tag,
-        }
-       })
+      });
+      return await prisma.siteConfig.findFirst();
     }
+    return config;
+  }
+
+  public async setConfig(id: string, siteInfo: ISiteInfo) {
+    await prisma.siteConfig.update({
+      where: {
+        id: id
+      },
+      data: {
+        companyName: siteInfo.companyName,
+        siteNo: siteInfo.siteNo,
+        contactTel: siteInfo.contactTel,
+        address: siteInfo.address,
+        tag: siteInfo.tag,
+      }
+    })
   }
 }
