@@ -82,6 +82,7 @@ export default class Question extends Service {
           choices: true,
           analysis: true,
           tag: true,
+          createAt: true,
           answer: include === 'answer',
         },
       })
