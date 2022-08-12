@@ -23,4 +23,6 @@ export interface ISiteInfo {
   contactTel: string;
   address: string;
   tag: string[];
+  theme: string;
+  themeList: string[];
 }

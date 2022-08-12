@@ -81,11 +81,13 @@ model Option {
   @@map("options")
 }
 
-model siteConfig {
+model site_config {
   id String    @id @unique @default(uuid())
   companyName String
   siteNo      String
   contactTel  String
   address     String
   tag         String[]
+  theme       String  @default("主题1")
+  themeList   String[]
 }

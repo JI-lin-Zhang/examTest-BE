@@ -5,24 +5,26 @@ import { ISiteInfo } from '../../constants/interfaces'
 export default class SiteController extends Service {
 
   public async getConfig() {
-    let config = await prisma.siteConfig.findFirst();
+    let config = await prisma.site_config.findFirst();
     if(!config){
-      await prisma.siteConfig.create({
+      await prisma.site_config.create({
         data: {
           companyName: '',
           siteNo: '',
           contactTel: '',
           address: '',
           tag: [],
+          theme: '主题1',
+          themeList: ["主题1", "主题2", "主题3"],
         }
       });
-      return await prisma.siteConfig.findFirst();
+      return await prisma.site_config.findFirst();
     }
     return config;
   }
 
   public async setConfig(id: string, siteInfo: ISiteInfo) {
-    await prisma.siteConfig.update({
+    await prisma.site_config.update({
       where: {
         id: id
       },
@@ -32,6 +34,7 @@ export default class SiteController extends Service {
         contactTel: siteInfo.contactTel,
         address: siteInfo.address,
         tag: siteInfo.tag,
+        theme: siteInfo.theme,
       }
     })
   }
