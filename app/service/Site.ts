@@ -6,14 +6,14 @@ export default class SiteController extends Service {
 
   public async getConfig() {
     let config = await prisma.site_config.findFirst();
-    if(!config){
+    if (!config) {
       await prisma.site_config.create({
         data: {
-          companyName: '',
+          companyName: '长沙丰林信息科技有限公司',
           siteNo: '',
           contactTel: '',
           address: '',
-          tag: [],
+          tag: ["react", "node", "dotnet"],
           theme: '主题1',
           themeList: ["主题1", "主题2", "主题3"],
         }
