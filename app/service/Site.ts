@@ -9,11 +9,11 @@ export default class SiteController extends Service {
     if (!config) {
       await prisma.site_config.create({
         data: {
-          companyName: '长沙丰林信息科技有限公司',
+          companyName: '',
           siteNo: '',
           contactTel: '',
           address: '',
-          tag: ["react", "node", "dotnet"],
+          tag: [],
           theme: '主题1',
           themeList: ["主题1", "主题2", "主题3"],
         }
